@@ -4,7 +4,7 @@
   "description": "A graph conversion tool for https://cloud.google.com/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/JupiterOne/graph-google-cloud"
+    "url": "https://github.com/maazkarim/graph-google-cloud"
   },
   "license": "MPL-2.0",
   "main": "src/index.js",
@@ -40,12 +40,12 @@
     "document:permissions": " yarn ts-node commands/documentPermissions.ts documentPermissions"
   },
   "peerDependencies": {
-    "@jupiterone/integration-sdk-core": "^11.0.3"
+    "@jupiterone/integration-sdk-core": "file:/Users/maaz.karim/Desktop/MaazInternship/sdk/j1_sdk/packages/integration-sdk-core"
   },
   "devDependencies": {
-    "@jupiterone/integration-sdk-core": "^11.0.3",
-    "@jupiterone/integration-sdk-dev-tools": "^11.0.3",
-    "@jupiterone/integration-sdk-testing": "^11.0.3",
+    "@jupiterone/integration-sdk-core": "file:/Users/maaz.karim/Desktop/MaazInternship/sdk/j1_sdk/packages/integration-sdk-core",
+    "@jupiterone/integration-sdk-dev-tools": "file:/Users/maaz.karim/Desktop/MaazInternship/sdk/j1_sdk/packages/integration-sdk-dev-tools",
+    "@jupiterone/integration-sdk-testing": "file:/Users/maaz.karim/Desktop/MaazInternship/sdk/j1_sdk/packages/integration-sdk-testing",
     "@types/bunyan": "^1.8.6",
     "@types/bunyan-format": "^0.2.3",
     "@types/node-fetch": "^2.5.10",
