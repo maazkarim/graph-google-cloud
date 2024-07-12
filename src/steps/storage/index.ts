@@ -14,6 +14,7 @@ import { storage_v1 } from 'googleapis';
 import { publishUnprocessedBucketsEvent } from '../../utils/events';
 import { OrgPolicyClient } from '../orgpolicy/client';
 import { isMemberPublic } from '../../utils/iam';
+import ErrorLogger from '../../../errorLogger';
 
 type iamConfiguration = {
   bucketPolicyOnly?: {
@@ -157,6 +158,8 @@ export async function fetchStorageBuckets(
     try {
       bucketPolicy = await client.getPolicy(bucketId);
     } catch (err) {
+      const errorLogger = ErrorLogger.getInstance();
+      errorLogger.logError("storage", err.message);
       if (
         err.message ===
         'Bucket is requester pays bucket but no user project provided.'

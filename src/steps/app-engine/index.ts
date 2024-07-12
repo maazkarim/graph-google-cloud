@@ -50,6 +50,7 @@ import {
 } from '../iam/constants';
 import { isServiceAccountEmail } from '../../utils/iam';
 import { StorageEntitiesSpec, StorageStepsSpec } from '../storage/constants';
+import ErrorLogger from '../../../errorLogger';
 
 async function withAppEngineErrorHandling<T>(
   logger: IntegrationLogger,
@@ -59,6 +60,8 @@ async function withAppEngineErrorHandling<T>(
   try {
     return await fn();
   } catch (err) {
+    const errorLogger = ErrorLogger.getInstance();
+    errorLogger.logError("app-engine", err.message);
     if (
       err._cause?.code === 404 ||
       err.message.startsWith('Could not find Application')

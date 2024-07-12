@@ -38,8 +38,11 @@ import {
   createBigQueryModelEntity,
   createBigQueryTableEntity,
 } from './converters';
+import ErrorLogger from '../../../errorLogger';
 
 export * from './constants';
+
+const errorLogger = ErrorLogger.getInstance();
 
 function isBigQueryPolicyPublicAccess(
   bigQueryPolicy: bigquery_v2.Schema$Policy | undefined,
@@ -73,6 +76,7 @@ export async function fetchBigQueryDatasets(
       await jobState.addEntity(createBigQueryDatasetEntity(dataset));
     });
   } catch (err) {
+    errorLogger.logError("big-query", err.message);
     const originalError = err._cause?.errors?.[0];
     if (
       originalError?.message ===
@@ -171,6 +175,7 @@ export async function fetchBigQueryModels(
             },
           );
         } catch (error) {
+          errorLogger.logError("big-query", error.message);
           handleDatasetError(error, 'models', datasetEntity.name, logger);
         }
       }
@@ -203,6 +208,7 @@ export async function fetchBigQueryTables(
               try {
                 tablePolicy = await client.getTablePolicy(table);
               } catch (error) {
+                errorLogger.logError("big-query", error.message);
                 logger.warn(
                   { tableId: table.id },
                   'Unable to fetch IAM policy for BigQuery table. Property `isPublic` will not be set.',
@@ -232,6 +238,7 @@ export async function fetchBigQueryTables(
             },
           );
         } catch (error) {
+          errorLogger.logError("big-query", error.message);
           handleDatasetError(error, 'tables', datasetEntity.name, logger);
         }
       }

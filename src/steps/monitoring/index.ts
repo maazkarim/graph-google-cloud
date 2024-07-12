@@ -1,3 +1,4 @@
+import ErrorLogger from '../../../errorLogger';
 import {
   GoogleCloudIntegrationStep,
   IntegrationStepContext,
@@ -31,6 +32,8 @@ export async function fetchAlertPolicies(
       );
     });
   } catch (err) {
+    const errorLogger = ErrorLogger.getInstance();
+    errorLogger.logError("monitoring", err.message);
     if (err.message?.match && err.message.match(/is not a workspace/i)) {
       publishUnsupportedConfigEvent({
         logger,

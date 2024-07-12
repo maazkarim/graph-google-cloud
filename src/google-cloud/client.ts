@@ -16,6 +16,7 @@ import {
   DEFAULT_FETCH_BASIC_API_CALL_AUTHORIZATION_HANDLING_OPTIONS,
   DEFAULT_FETCH_AUTHORIZATION_HANDLING_OPTIONS,
 } from '../constants';
+import ErrorLogger from '../../errorLogger';
 
 export interface ClientOptions {
   config: IntegrationConfig;
@@ -235,6 +236,9 @@ export class Client {
             );
 
             const newError = handleApiClientError(err);
+
+            const errorLogger = ErrorLogger.getInstance();
+            errorLogger.logError(stepMetadata!.stepId, err.message);
 
             if (!newError.retryable) {
               this.logger.info(

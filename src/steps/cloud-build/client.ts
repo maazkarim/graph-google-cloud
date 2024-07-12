@@ -6,8 +6,10 @@ import {
   CloudBuildPermissions,
   CloudBuildStepsSpec,
 } from './constants';
+import ErrorLogger from '../../../errorLogger';
 
 export class CloudBuildClient extends Client {
+  private errorLogger = ErrorLogger.getInstance();
   private client = google.cloudbuild({ version: 'v1' });
 
   private async iterateLocations(callback: (region: string) => Promise<void>) {
@@ -116,6 +118,7 @@ export class CloudBuildClient extends Client {
         }
       }
     } catch (err) {
+      this.errorLogger.logError("cloud-build", err.message);
       context.logger.error(
         'Error getting the Github Enterprise Configs for Cloud Build.',
       );
